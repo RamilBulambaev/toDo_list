@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="content">
+      <header class="header">
+        <div class="header__container container">
+          <div class="header__logo">
+            <img src="./assets/Logo.png" alt="ToDo List" />
+          </div>
+        </div>
+      </header>
+      <main class="main">
+        <div class="main__container container">
+          <section class="main__form-task form-task">
+            <form name="task" class="form">
+              <input
+                type="text"
+                name="taks"
+                class="form__input"
+                placeholder="Создать новую задачу"
+              />
+              <button class="form-button">Добавить</button>
+            </form>
+          </section>
+          <section class="tasks">
+            <div class="tasks__summary">
+              <div class="tasks-summary__panding tasks-panding">
+                Невыполненные задачи:
+                <span class="tasks-panding__count">0</span>
+              </div>
+              <div class="tasks-summary__completed tasks-completed">
+                Выполненные задачи:
+                <span class="tasks-completed__count">0</span>
+              </div>
+            </div>
+            <div class="tasks__list">
+              <div class="list__not">
+                <img src="./assets/list.svg" alt="list" />
+                <p class="list__not-bould">
+                  Вы еще не добавили не одной задачи
+                </p>
+                <p class="list__not-standart">
+                  Создайте задачи и организуйте свои дела
+                </p>
+              </div>
+              <div class="list"></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>
