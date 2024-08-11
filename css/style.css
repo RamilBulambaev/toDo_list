@@ -32,7 +32,7 @@
 }
 
 .header__logo {
-  padding: 72px 0;
+  padding: 50px 0;
 }
 
 .main {
@@ -49,7 +49,7 @@
   max-width: 750px;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 65px;
+  margin-bottom: 30px;
 }
 
 .form__input {
@@ -128,6 +128,110 @@
   color: #808080;
 }
 
-.list {
-  /* display: none; */
+.list__container {
+  height: 60vh;
+  overflow-x: hidden;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  border-radius: 8px;
+  height: 72px;
+  background-color: #262626;
+  margin: 12px;
+}
+
+.custom-checkbox {
+  margin-top: 16px;
+  margin-left: 16px;
+  margin-right: 12px;
+}
+
+.list-item p {
+  display: block;
+  text-align: left;
+  flex-grow: 1;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word; /* переносит длинные слова */
+  word-break: break-all; /* переносит слово, если оно не умещается */
+}
+
+.list-item img {
+  cursor: pointer;
+  margin-top: 16px;
+  margin-right: 16px;
+  width: 24px;
+  height: 24px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Скрываем стандартный чекбокс */
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+/* Стилизация контейнера для чекбокса */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 24px;
+  user-select: none;
+}
+
+/* Стилизация кастомного чекбокса */
+.custom-checkbox__box {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #4ea8de;
+  border-radius: 50%;
+  background-color: transparent;
+  margin-right: 8px;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Стилизация состояния чекбокса "включено" */
+.custom-checkbox input[type="checkbox"]:checked + .custom-checkbox__box {
+  background-color: #004f99;
+  border-color: #004f99;
+}
+
+/* Добавляем галочку при активном состоянии чекбокса */
+.custom-checkbox input[type="checkbox"]:checked + .custom-checkbox__box::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Добавляем стили при наведении */
+.custom-checkbox__box:hover {
+  border-color: #0a58a6;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .custom-checkbox__box:hover {
+  background-color: #106ca1;
+}
+
+.task-complete {
+  color: #808080;
+  text-decoration: line-through;
 }

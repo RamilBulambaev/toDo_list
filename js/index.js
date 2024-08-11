@@ -1,6 +1,6 @@
-import { handleFormSubmit } from "./createTask.js";
+import { start } from "./createTask.js";
 
 const startApp = () => {
-  handleFormSubmit();
+  start();
 };
 startApp();
