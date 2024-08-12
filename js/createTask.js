@@ -4,18 +4,11 @@ import {
   LIST_NOT,
   TASK_PANDING_COUNT,
   TASK_COMPLETED_COUNT,
+  FILTER_TASK,
 } from "./domElements.js";
 
 let listTasks = [];
 const localStorage = window.localStorage;
-LIST.addEventListener("click", (e) => {
-  if (e.target.classList.value === "delete") {
-    deleteTask(e.target.parentElement.dataset.id);
-  }
-  if (e.target.classList.value === "checkbox") {
-    toggleCompletedTask(e.target.closest("li").dataset.id);
-  }
-});
 
 const checkedTaskComplite = () => {
   const completedTast = listTasks.reduce((acc, item) => {
@@ -50,6 +43,8 @@ export const start = () => {
     renderTasks();
   }
   handleFormSubmit();
+  hadletClickTask();
+  handlerChangeFilter();
 };
 
 const renderTasks = () => {
@@ -116,4 +111,35 @@ const visibleTasks = () => {
     LIST_NOT.classList.remove("hidden");
     LIST.classList.add("hidden");
   }
+};
+
+const hadletClickTask = () => {
+  LIST.addEventListener("click", (e) => {
+    if (e.target.classList.value === "delete") {
+      deleteTask(e.target.parentElement.dataset.id);
+    }
+    if (e.target.classList.value === "checkbox") {
+      toggleCompletedTask(e.target.closest("li").dataset.id);
+    }
+  });
+};
+
+const handlerChangeFilter = () => {
+  FILTER_TASK.addEventListener("change", (e) => {
+    const valueFilter = e.target.value;
+    if (valueFilter === "panding") {
+      listTasks = JSON.parse(localStorage.getItem("tasks"));
+      listTasks = listTasks.filter((item) => item.completed === false);
+      renderTasks();
+    } else if (valueFilter === "completed") {
+      listTasks = JSON.parse(localStorage.getItem("tasks"));
+      listTasks = listTasks.filter((item) => item.completed === true);
+      console.log(listTasks);
+      renderTasks();
+    } else {
+      listTasks = JSON.parse(localStorage.getItem("tasks"));
+      console.log(listTasks);
+      renderTasks();
+    }
+  });
 };

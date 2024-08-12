@@ -7,3 +7,4 @@ export const TASK_PANDING_COUNT = document.querySelector(
 export const TASK_COMPLETED_COUNT = document.querySelector(
   ".tasks-completed__count"
 );
+export const FILTER_TASK = document.querySelector(".filter");
