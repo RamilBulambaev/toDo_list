@@ -6,9 +6,9 @@ import {
 } from "./domElements.js";
 
 export const renderTasks = (listTasks) => {
-  const numberOfCompletedTask = checkedTaskComplite(listTasks);
+  const numberOfCompletedTask = checkedTaskComplite();
   const numberOfTasks = listTasks.length;
-  visibleTasks(listTasks);
+  visibleTasks();
   LIST.innerHTML = "";
   listTasks.forEach((task) => {
     LIST.appendChild(createTask(task));

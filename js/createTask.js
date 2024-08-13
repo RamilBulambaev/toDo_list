@@ -1,9 +1,9 @@
 import { LIST, LIST_NOT } from "./domElements.js";
 import { renderTasks } from "./renderTask.js";
-import { localStorage } from "./start.js";
+import { localStorage, getTasksFromLocalStorage } from "./start.js";
 
 export const checkedTaskComplite = () => {
-  let listTasks = JSON.parse(localStorage.getItem("tasks"));
+  let listTasks = getTasksFromLocalStorage();
   const completedTast = listTasks.reduce((acc, item) => {
     if (item.completed) {
       acc += 1;
@@ -14,7 +14,10 @@ export const checkedTaskComplite = () => {
 };
 
 export const addTasks = (task) => {
-  let listTasks = JSON.parse(localStorage.getItem("tasks"));
+  let listTasks = [];
+  if (localStorage.getItem("tasks")) {
+    listTasks = getTasksFromLocalStorage();
+  }
 
   listTasks.push({
     description: task,
@@ -26,7 +29,7 @@ export const addTasks = (task) => {
 };
 
 export const deleteTask = (id) => {
-  let listTasks = JSON.parse(localStorage.getItem("tasks"));
+  let listTasks = getTasksFromLocalStorage();
   listTasks = listTasks.filter((task) => task.id != id);
   localStorage.setItem("tasks", JSON.stringify(listTasks));
   renderTasks(listTasks);
@@ -58,7 +61,7 @@ export const createTask = (task) => {
 };
 
 export const toggleCompletedTask = (id) => {
-  let listTasks = JSON.parse(localStorage.getItem("tasks"));
+  let listTasks = getTasksFromLocalStorage();
   const taskIndex = listTasks.findIndex((item) => item.id === +id);
 
   if (taskIndex !== -1) {
@@ -70,7 +73,7 @@ export const toggleCompletedTask = (id) => {
 };
 
 export const visibleTasks = () => {
-  let listTasks = JSON.parse(localStorage.getItem("tasks"));
+  let listTasks = getTasksFromLocalStorage();
   if (listTasks.length > 0) {
     LIST_NOT.classList.add("hidden");
     LIST.classList.remove("hidden");

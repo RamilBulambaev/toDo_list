@@ -1,24 +1,28 @@
 import { renderTasks } from "./renderTask.js";
 import {
-  hadletClickTask,
+  handleClickTask,
   handleFormSubmit,
-  handlerChangeFilter,
+  handleChangeFilter,
   handleSort,
 } from "./handlers.js";
 import { LIST } from "./domElements.js";
 
-export let listTasks = [];
+export const getTasksFromLocalStorage = () =>
+  JSON.parse(window.localStorage.getItem("tasks")) || [];
+
+// export let listTasks = [];
 export const localStorage = window.localStorage;
 
 export const start = () => {
   LIST.innerHTML = "";
   if (localStorage.getItem("tasks")) {
-    listTasks = JSON.parse(localStorage.getItem("tasks"));
-    renderTasks(listTasks);
+    // listTasks = JSON.parse(localStorage.getItem("tasks"));
+    // renderTasks(listTasks);
+    renderTasks(getTasksFromLocalStorage());
   }
 
-  handleFormSubmit(listTasks);
-  hadletClickTask();
-  handlerChangeFilter(listTasks);
-  handleSort(listTasks);
+  handleFormSubmit();
+  handleClickTask();
+  handleChangeFilter();
+  handleSort();
 };

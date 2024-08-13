@@ -1,18 +1,17 @@
 import { renderTasks } from "./renderTask.js";
 import { addTasks, deleteTask, toggleCompletedTask } from "./createTask.js";
 import { ADD_FORM, LIST, SORT__DIV, FILTER_TASK } from "./domElements.js";
-import { localStorage } from "./start.js";
+import { getTasksFromLocalStorage } from "./start.js";
 
 export const handleFormSubmit = () => {
   ADD_FORM.addEventListener("submit", (e) => {
-    const listTasks = JSON.parse(localStorage.getItem("tasks"));
     e.preventDefault();
-    addTasks(e.target[0].value, listTasks);
+    addTasks(e.target[0].value);
     e.target[0].value = "";
   });
 };
 
-export const hadletClickTask = () => {
+export const handleClickTask = () => {
   LIST.addEventListener("click", (e) => {
     if (e.target.classList.value === "delete") {
       deleteTask(e.target.parentElement.dataset.id);
@@ -25,13 +24,14 @@ export const hadletClickTask = () => {
 
 export const handleSort = () => {
   SORT__DIV.addEventListener("click", (e) => {
-    let listTasks = JSON.parse(localStorage.getItem("tasks"));
+    let listTasks = getTasksFromLocalStorage();
     if (e.target.classList.value === "tasks-summary__panding tasks-panding") {
       listTasks.sort((a, b) => {
         if (a.completed === false && b.completed === true) return -1;
         if (a.completed === true && b.completed === false) return 1;
         return 0;
       });
+      FILTER_TASK.value = "title";
       renderTasks(listTasks);
     } else if (
       e.target.classList.value === "tasks-summary__completed tasks-completed"
@@ -41,14 +41,15 @@ export const handleSort = () => {
         if (a.completed === true && b.completed === false) return -1;
         return 0;
       });
+      FILTER_TASK.value = "title";
       renderTasks(listTasks);
     }
   });
 };
 
-export const handlerChangeFilter = () => {
+export const handleChangeFilter = () => {
   FILTER_TASK.addEventListener("change", (e) => {
-    let listTasks = JSON.parse(localStorage.getItem("tasks"));
+    let listTasks = getTasksFromLocalStorage();
     const valueFilter = e.target.value;
     if (valueFilter === "panding") {
       listTasks = listTasks.filter((item) => item.completed === false);
@@ -57,7 +58,7 @@ export const handlerChangeFilter = () => {
       listTasks = listTasks.filter((item) => item.completed === true);
       renderTasks(listTasks);
     } else {
-      listTasks = JSON.parse(localStorage.getItem("tasks"));
+      listTasks = getTasksFromLocalStorage();
       renderTasks(listTasks);
     }
   });
