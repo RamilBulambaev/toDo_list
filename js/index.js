@@ -1,4 +1,4 @@
-import { start } from "./createTask.js";
+import { start } from "./start.js";
 
 const startApp = () => {
   start();

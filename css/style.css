@@ -86,6 +86,7 @@
 }
 
 .filter {
+  cursor: pointer;
   width: 100%;
   padding: 10px 25px 10px 10px;
   font-size: 16px;
@@ -114,23 +115,13 @@
   color: #999;
 }
 
-/* .filter {
-  border: none;
-  background-color: #1d1d1d;
-  padding: 10px;
-}
-
-.filter option {
-  color: #fff;
-  background-color: #1d1d1d;
-  padding: 5px;
-} */
-
 .tasks-panding {
+  cursor: pointer;
   color: #4ea8de;
 }
 
 .tasks-completed {
+  cursor: pointer;
   color: #8284fa;
 }
 

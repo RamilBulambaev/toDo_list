@@ -1,16 +1,9 @@
-import {
-  ADD_FORM,
-  LIST,
-  LIST_NOT,
-  TASK_PANDING_COUNT,
-  TASK_COMPLETED_COUNT,
-  FILTER_TASK,
-} from "./domElements.js";
+import { LIST, LIST_NOT } from "./domElements.js";
+import { renderTasks } from "./renderTask.js";
+import { localStorage } from "./start.js";
 
-let listTasks = [];
-const localStorage = window.localStorage;
-
-const checkedTaskComplite = () => {
+export const checkedTaskComplite = () => {
+  let listTasks = JSON.parse(localStorage.getItem("tasks"));
   const completedTast = listTasks.reduce((acc, item) => {
     if (item.completed) {
       acc += 1;
@@ -20,48 +13,26 @@ const checkedTaskComplite = () => {
   return completedTast;
 };
 
-const addTasks = (task) => {
+export const addTasks = (task) => {
+  let listTasks = JSON.parse(localStorage.getItem("tasks"));
+
   listTasks.push({
     description: task,
     completed: false,
     id: Date.now(),
   });
   localStorage.setItem("tasks", JSON.stringify(listTasks));
-  renderTasks();
+  renderTasks(listTasks);
 };
 
-const deleteTask = (id) => {
+export const deleteTask = (id) => {
+  let listTasks = JSON.parse(localStorage.getItem("tasks"));
   listTasks = listTasks.filter((task) => task.id != id);
   localStorage.setItem("tasks", JSON.stringify(listTasks));
-  renderTasks();
+  renderTasks(listTasks);
 };
 
-export const start = () => {
-  LIST.innerHTML = "";
-  if (localStorage.getItem("tasks")) {
-    listTasks = JSON.parse(localStorage.getItem("tasks"));
-    renderTasks();
-  }
-  handleFormSubmit();
-  hadletClickTask();
-  handlerChangeFilter();
-};
-
-const renderTasks = () => {
-  const numberOfCompletedTask = checkedTaskComplite();
-  const numberOfTasks = listTasks.length;
-  visibleTasks();
-  LIST.innerHTML = "";
-  listTasks.forEach((task) => {
-    LIST.appendChild(createTask(task));
-  });
-  TASK_COMPLETED_COUNT.innerHTML = `${numberOfCompletedTask}/${numberOfTasks}`;
-  TASK_PANDING_COUNT.innerHTML = `${
-    numberOfTasks - numberOfCompletedTask
-  }/${numberOfTasks}`;
-};
-
-const createTask = (task) => {
+export const createTask = (task) => {
   const li = document.createElement("li");
   li.classList.add("list__item", "list-item");
   li.setAttribute("data-id", task.id);
@@ -86,24 +57,20 @@ const createTask = (task) => {
   return li;
 };
 
-const handleFormSubmit = () => {
-  ADD_FORM.addEventListener("submit", (e) => {
-    e.preventDefault();
-    addTasks(e.target[0].value);
-    e.target[0].value = "";
-  });
-};
+export const toggleCompletedTask = (id) => {
+  let listTasks = JSON.parse(localStorage.getItem("tasks"));
+  const taskIndex = listTasks.findIndex((item) => item.id === +id);
 
-const toggleCompletedTask = (id) => {
-  const task = listTasks.find((item) => item.id == id);
-  if (task) {
-    task.completed = !task.completed;
+  if (taskIndex !== -1) {
+    listTasks[taskIndex].completed = !listTasks[taskIndex].completed;
     localStorage.setItem("tasks", JSON.stringify(listTasks));
-    renderTasks();
+
+    renderTasks(listTasks);
   }
 };
 
-const visibleTasks = () => {
+export const visibleTasks = () => {
+  let listTasks = JSON.parse(localStorage.getItem("tasks"));
   if (listTasks.length > 0) {
     LIST_NOT.classList.add("hidden");
     LIST.classList.remove("hidden");
@@ -111,35 +78,4 @@ const visibleTasks = () => {
     LIST_NOT.classList.remove("hidden");
     LIST.classList.add("hidden");
   }
-};
-
-const hadletClickTask = () => {
-  LIST.addEventListener("click", (e) => {
-    if (e.target.classList.value === "delete") {
-      deleteTask(e.target.parentElement.dataset.id);
-    }
-    if (e.target.classList.value === "checkbox") {
-      toggleCompletedTask(e.target.closest("li").dataset.id);
-    }
-  });
-};
-
-const handlerChangeFilter = () => {
-  FILTER_TASK.addEventListener("change", (e) => {
-    const valueFilter = e.target.value;
-    if (valueFilter === "panding") {
-      listTasks = JSON.parse(localStorage.getItem("tasks"));
-      listTasks = listTasks.filter((item) => item.completed === false);
-      renderTasks();
-    } else if (valueFilter === "completed") {
-      listTasks = JSON.parse(localStorage.getItem("tasks"));
-      listTasks = listTasks.filter((item) => item.completed === true);
-      console.log(listTasks);
-      renderTasks();
-    } else {
-      listTasks = JSON.parse(localStorage.getItem("tasks"));
-      console.log(listTasks);
-      renderTasks();
-    }
-  });
 };
