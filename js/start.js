@@ -5,19 +5,12 @@ import {
   handleChangeFilter,
   handleSort,
 } from "./handlers.js";
+import { getTasksFromLocalStorage } from "./storageUtils.js";
 import { LIST } from "./domElements.js";
-
-export const getTasksFromLocalStorage = () =>
-  JSON.parse(window.localStorage.getItem("tasks")) || [];
-
-// export let listTasks = [];
-export const localStorage = window.localStorage;
 
 export const start = () => {
   LIST.innerHTML = "";
-  if (localStorage.getItem("tasks")) {
-    // listTasks = JSON.parse(localStorage.getItem("tasks"));
-    // renderTasks(listTasks);
+  if (window.localStorage.getItem("tasks")) {
     renderTasks(getTasksFromLocalStorage());
   }
 

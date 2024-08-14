@@ -1,7 +1,7 @@
 import { renderTasks } from "./renderTask.js";
-import { addTasks, deleteTask, toggleCompletedTask } from "./createTask.js";
+import { addTasks, deleteTask, toggleCompletedTask } from "./taskOperations.js";
 import { ADD_FORM, LIST, SORT__DIV, FILTER_TASK } from "./domElements.js";
-import { getTasksFromLocalStorage } from "./start.js";
+import { getTasksFromLocalStorage } from "./storageUtils.js";
 
 export const handleFormSubmit = () => {
   ADD_FORM.addEventListener("submit", (e) => {

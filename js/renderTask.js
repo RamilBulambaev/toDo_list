@@ -1,9 +1,12 @@
-import { checkedTaskComplite, visibleTasks, createTask } from "./createTask.js";
+import { createTask } from "./createTask.js";
+import { checkedTaskComplite } from "./taskOperations.js";
 import {
   LIST,
+  LIST_NOT,
   TASK_COMPLETED_COUNT,
   TASK_PANDING_COUNT,
 } from "./domElements.js";
+import { getTasksFromLocalStorage } from "./storageUtils.js";
 
 export const renderTasks = (listTasks) => {
   const numberOfCompletedTask = checkedTaskComplite();
@@ -17,4 +20,16 @@ export const renderTasks = (listTasks) => {
   TASK_PANDING_COUNT.innerHTML = `${
     numberOfTasks - numberOfCompletedTask
   }/${numberOfTasks}`;
+};
+
+const visibleTasks = () => {
+  let listTasks = getTasksFromLocalStorage();
+
+  if (listTasks.length > 0) {
+    LIST_NOT.classList.add("hidden");
+    LIST.classList.remove("hidden");
+  } else {
+    LIST_NOT.classList.remove("hidden");
+    LIST.classList.add("hidden");
+  }
 };
