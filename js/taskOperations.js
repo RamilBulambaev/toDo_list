@@ -39,3 +39,8 @@ export const toggleCompletedTask = (id) => {
     setTasksFromLocalStorageAndRender(listTasks);
   }
 };
+
+export const invalidFieldWarningInput = (input) => {
+  input.placeholder = "Поле ввода должно быть заполненно";
+  input.classList.add("invalid-value");
+};

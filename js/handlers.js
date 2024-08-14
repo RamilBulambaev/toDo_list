@@ -1,13 +1,28 @@
 import { renderTasks } from "./renderTask.js";
-import { addTasks, deleteTask, toggleCompletedTask } from "./taskOperations.js";
+import {
+  addTasks,
+  deleteTask,
+  toggleCompletedTask,
+  invalidFieldWarningInput,
+} from "./taskOperations.js";
 import { ADD_FORM, LIST, SORT__DIV, FILTER_TASK } from "./domElements.js";
 import { getTasksFromLocalStorage } from "./storageUtils.js";
 
 export const handleFormSubmit = () => {
   ADD_FORM.addEventListener("submit", (e) => {
     e.preventDefault();
-    addTasks(e.target[0].value);
-    e.target[0].value = "";
+
+    if (e.target[0].value) {
+      addTasks(e.target[0].value);
+      e.target[0].value = "";
+    } else {
+      invalidFieldWarningInput(e.target[0]);
+    }
+  });
+  ADD_FORM.addEventListener("focusin", (e) => {
+    const input = e.target;
+    input.classList.remove("invalid-value");
+    input.placeholder = "Создать новую задачу";
   });
 };
 

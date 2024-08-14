@@ -13,7 +13,7 @@ export const createTask = (task) => {
   label.append(checkbox, span);
 
   const p = document.createElement("p");
-  p.textContent = task.description;
+  p.textContent = task.description.trim();
   if (task.completed) {
     p.classList.add("task-complete");
   }

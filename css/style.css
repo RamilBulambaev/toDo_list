@@ -267,3 +267,11 @@
   color: #808080;
   text-decoration: line-through;
 }
+
+.invalid-value {
+  background-color: rgba(235, 16, 16, 0.4);
+}
+
+.invalid-value::placeholder {
+  color: rgb(170, 170, 170);
+}
