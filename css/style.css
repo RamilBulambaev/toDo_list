@@ -181,7 +181,8 @@
   margin-right: 12px;
 }
 
-.list-item p {
+.list-item__description,
+.task-edit-input {
   display: block;
   text-align: left;
   flex-grow: 1;
@@ -195,6 +196,10 @@
   -webkit-box-orient: vertical;
   word-wrap: break-word; /* переносит длинные слова */
   word-break: break-all; /* переносит слово, если оно не умещается */
+}
+
+.task-edit-input {
+  background-color: transparent;
 }
 
 .list-item img {

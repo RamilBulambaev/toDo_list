@@ -9,7 +9,7 @@ import {
 import { getTasksFromLocalStorage } from "./storageUtils.js";
 
 export const renderTasks = (listTasks) => {
-  const numberOfCompletedTask = checkedTaskComplite();
+  const numberOfCompletedTask = checkedTaskComplite(listTasks);
   const numberOfTasks = listTasks.length;
   visibleTasks();
   LIST.innerHTML = "";

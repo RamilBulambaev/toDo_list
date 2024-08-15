@@ -4,6 +4,7 @@ import {
   deleteTask,
   toggleCompletedTask,
   invalidFieldWarningInput,
+  enableTaskEditing,
 } from "./taskOperations.js";
 import { ADD_FORM, LIST, SORT__DIV, FILTER_TASK } from "./domElements.js";
 import { getTasksFromLocalStorage } from "./storageUtils.js";
@@ -28,11 +29,14 @@ export const handleFormSubmit = () => {
 
 export const handleClickTask = () => {
   LIST.addEventListener("click", (e) => {
-    if (e.target.classList.value === "delete") {
+    if (e.target.classList.contains("delete")) {
       deleteTask(e.target.parentElement.dataset.id);
     }
-    if (e.target.classList.value === "checkbox") {
+    if (e.target.classList.contains("checkbox")) {
       toggleCompletedTask(e.target.closest("li").dataset.id);
+    }
+    if (e.target.classList.contains("list-item__description")) {
+      enableTaskEditing(e.target);
     }
   });
 };
@@ -40,7 +44,7 @@ export const handleClickTask = () => {
 export const handleSort = () => {
   SORT__DIV.addEventListener("click", (e) => {
     let listTasks = getTasksFromLocalStorage();
-    if (e.target.classList.value === "tasks-summary__panding tasks-panding") {
+    if (e.target.classList.contains("tasks-panding")) {
       listTasks.sort((a, b) => {
         if (a.completed === false && b.completed === true) return -1;
         if (a.completed === true && b.completed === false) return 1;
@@ -48,9 +52,7 @@ export const handleSort = () => {
       });
       FILTER_TASK.value = "title";
       renderTasks(listTasks);
-    } else if (
-      e.target.classList.value === "tasks-summary__completed tasks-completed"
-    ) {
+    } else if (e.target.classList.contains("tasks-completed")) {
       listTasks.sort((a, b) => {
         if (a.completed === false && b.completed === true) return 1;
         if (a.completed === true && b.completed === false) return -1;

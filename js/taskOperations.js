@@ -2,6 +2,7 @@ import {
   getTasksFromLocalStorage,
   setTasksFromLocalStorageAndRender,
 } from "./storageUtils.js";
+import { createElementAndAddClasses } from "./utils.js";
 
 export const addTasks = (task) => {
   let listTasks = getTasksFromLocalStorage();
@@ -19,8 +20,8 @@ export const deleteTask = (id) => {
   setTasksFromLocalStorageAndRender(listTasks);
 };
 
-export const checkedTaskComplite = () => {
-  let listTasks = getTasksFromLocalStorage();
+export const checkedTaskComplite = (tasksList) => {
+  let listTasks = tasksList;
   const completedTast = listTasks.reduce((acc, item) => {
     if (item.completed) {
       acc += 1;
@@ -43,4 +44,51 @@ export const toggleCompletedTask = (id) => {
 export const invalidFieldWarningInput = (input) => {
   input.placeholder = "Поле ввода должно быть заполненно";
   input.classList.add("invalid-value");
+};
+
+export const updateTaskDescription = (id, newDescription) => {
+  let listTasks = getTasksFromLocalStorage();
+  const taskIndex = listTasks.findIndex((item) => item.id === +id);
+
+  if (taskIndex !== -1) {
+    listTasks[taskIndex].description = newDescription;
+    setTasksFromLocalStorageAndRender(listTasks);
+  }
+};
+
+export const enableTaskEditing = (element) => {
+  const p = element;
+  const originalText = p.textContent;
+
+  const input = createElementAndAddClasses("input", ["task-edit-input"]);
+  input.type = "text";
+  input.value = originalText;
+
+  p.replaceWith(input);
+  input.focus();
+
+  const finishEditing = () => {
+    const newText = input.value.trim();
+
+    // Если текст пустой, вернуть оригинальный текст
+    if (!newText) {
+      p.textContent = originalText;
+    } else if (newText !== originalText) {
+      const taskId = input.closest("li").dataset.id;
+      updateTaskDescription(taskId, newText);
+      p.textContent = newText;
+    }
+
+    // Проверка, находится ли элемент input в DOM перед заменой
+    if (input.isConnected) {
+      input.replaceWith(p);
+    }
+  };
+
+  input.addEventListener("blur", finishEditing);
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      finishEditing();
+    }
+  });
 };

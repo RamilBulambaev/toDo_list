@@ -1,3 +1,5 @@
+import { createElementAndAddClasses } from "./utils.js";
+
 export const createTask = (task) => {
   const li = createElementAndAddClasses("li", ["list__item", "list-item"]);
   li.setAttribute("data-id", task.id);
@@ -12,7 +14,7 @@ export const createTask = (task) => {
 
   label.append(checkbox, span);
 
-  const p = document.createElement("p");
+  const p = createElementAndAddClasses("p", ["list-item__description"]);
   p.textContent = task.description.trim();
   if (task.completed) {
     p.classList.add("task-complete");
@@ -24,10 +26,4 @@ export const createTask = (task) => {
   li.append(label, p, imgDelete);
 
   return li;
-};
-
-const createElementAndAddClasses = (nameElement, arrClasses) => {
-  const element = document.createElement(nameElement);
-  arrClasses.forEach((item) => element.classList.add(item));
-  return element;
 };
