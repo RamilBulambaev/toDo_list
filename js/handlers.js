@@ -35,7 +35,10 @@ export const handleClickTask = () => {
     if (e.target.classList.contains("checkbox")) {
       toggleCompletedTask(e.target.closest("li").dataset.id);
     }
-    if (e.target.classList.contains("list-item__description")) {
+    if (
+      e.target.classList.contains("list-item__description") &&
+      !e.target.classList.contains("task-complete")
+    ) {
       enableTaskEditing(e.target);
     }
   });

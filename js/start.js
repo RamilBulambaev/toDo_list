@@ -7,6 +7,7 @@ import {
 } from "./handlers.js";
 import { getTasksFromLocalStorage } from "./storageUtils.js";
 import { LIST } from "./domElements.js";
+import { dragAndDrop } from "./dragAndDrop.js";
 
 export const start = () => {
   LIST.innerHTML = "";
@@ -18,4 +19,5 @@ export const start = () => {
   handleClickTask();
   handleChangeFilter();
   handleSort();
+  dragAndDrop();
 };

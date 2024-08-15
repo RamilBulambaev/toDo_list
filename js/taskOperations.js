@@ -33,8 +33,8 @@ export const checkedTaskComplite = (tasksList) => {
 
 export const toggleCompletedTask = (id) => {
   let listTasks = getTasksFromLocalStorage();
-  const taskIndex = listTasks.findIndex((item) => item.id === +id);
 
+  const taskIndex = listTasks.findIndex((item) => item.id === id);
   if (taskIndex !== -1) {
     listTasks[taskIndex].completed = !listTasks[taskIndex].completed;
     setTasksFromLocalStorageAndRender(listTasks);
@@ -70,16 +70,14 @@ export const enableTaskEditing = (element) => {
   const finishEditing = () => {
     const newText = input.value.trim();
 
-    // Если текст пустой, вернуть оригинальный текст
     if (!newText) {
       p.textContent = originalText;
-    } else if (newText !== originalText) {
+    } else if (newText !== originalText && newText.trim()) {
       const taskId = input.closest("li").dataset.id;
       updateTaskDescription(taskId, newText);
       p.textContent = newText;
     }
 
-    // Проверка, находится ли элемент input в DOM перед заменой
     if (input.isConnected) {
       input.replaceWith(p);
     }
@@ -87,6 +85,7 @@ export const enableTaskEditing = (element) => {
 
   input.addEventListener("blur", finishEditing);
   input.addEventListener("keypress", (e) => {
+    input.removeEventListener("blur", finishEditing);
     if (e.key === "Enter") {
       finishEditing();
     }

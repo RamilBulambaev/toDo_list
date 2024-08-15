@@ -1,8 +1,23 @@
+/* :root {
+  --color-bg-m: #1a1a1a;
+  --color-bg-h: #0d0d0d;
+  --color-text-main: #ffffff;
+  --color-text-additional: #808080;
+} */
+
+.lightstyle {
+  --color-bg-m: #ffffff;
+  --color-bg-h: #0d0d0d;
+  --color-text-main: #ffffff;
+  --color-text-additional: #808080;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: white;
+  color: var(--color-text-main);
+  outline: none;
 }
 
 .content {
@@ -12,7 +27,8 @@
   flex-grow: 1;
   margin: 0 auto;
   height: 100vh;
-  background: #1a1a1a;
+  /* background: #1a1a1a; */
+  background: var(--color-bg-m);
 }
 
 .container {
@@ -21,7 +37,8 @@
 }
 
 .header {
-  background: #0d0d0d;
+  /* background: #0d0d0d; */
+  background: #b4b4b4;
   position: relative;
   z-index: 5;
 }
@@ -36,7 +53,6 @@
 }
 
 .main {
-  background: #1a1a1a;
   overflow: hidden;
   flex-shrink: 1;
   position: relative;
@@ -58,18 +74,32 @@
   margin-bottom: 8px;
   max-width: 630px;
   width: 100%;
-  background: #262626;
+  /* background: #262626; */
+  background: #8f8f8f;
+  opacity: 0.9;
   border: none;
+  outline: none;
   border-radius: 8px;
-  color: white;
+  /* color: white; */
+  color: #262626;
+}
+
+.form__input:focus {
+  border: none;
+  outline: none;
+}
+.form__input::placeholder {
+  color: #424242;
 }
 
 .form-button {
   font-size: 16px;
   padding: 16px;
   background: #1579b3;
-  color: white;
+  /* color: white; */
+  color: #262626;
   border-radius: 8px;
+  border: none;
 }
 
 .tasks {
@@ -91,10 +121,13 @@
   padding: 10px 25px 10px 10px;
   font-size: 16px;
   border: none;
-  border-bottom: 1px solid #535252;
+  outline: none;
+  /* border-bottom: 1px solid #535252; */
+  border-bottom: 1px solid #000000;
   border-radius: 4px;
   background-color: transparent;
-  color: #1579b3;
+  /* color: #1579b3; */
+  color: #424242;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -106,13 +139,16 @@
 }
 
 .filter option {
-  background-color: #1a1a1a;
-  color: #fff;
+  /* background-color: #1a1a1a; */
+  background: #8f8f8f;
+  /* color: #fff; */
+  color: #161616;
   padding: 10px;
 }
 
 .filter option:disabled {
-  color: #999;
+  /* color: #999; */
+  color: #000000;
 }
 
 .tasks-panding {
@@ -129,13 +165,15 @@
 .tasks-panding__count {
   display: inline-block;
   padding: 2px 8px;
-  background: #333333;
+  /* background: #333333; */
+  background: #b4b4b4;
   border-radius: 999px;
 }
 
 .tasks__list {
   width: 100%;
-  border-top: 1px solid #333333;
+  /* border-top: 1px solid #333333; */
+  border-top: 1px solid #000000;
   border-radius: 8px;
 }
 
@@ -171,7 +209,9 @@
   align-items: start;
   border-radius: 8px;
   height: 72px;
-  background-color: #262626;
+  /* background-color: #262626; */
+  background: #8f8f8f;
+  opacity: 0.7;
   margin: 12px;
 }
 
@@ -183,6 +223,7 @@
 
 .list-item__description,
 .task-edit-input {
+  color: #262626;
   display: block;
   text-align: left;
   flex-grow: 1;
@@ -232,7 +273,8 @@
 .custom-checkbox__box {
   width: 24px;
   height: 24px;
-  border: 2px solid #4ea8de;
+  /* border: 2px solid #4ea8de; */
+  border: 2px solid #167ab8;
   border-radius: 50%;
   background-color: transparent;
   margin-right: 8px;
@@ -269,14 +311,17 @@
 }
 
 .task-complete {
-  color: #808080;
+  /* color: #808080; */
+  color: #424242;
   text-decoration: line-through;
 }
 
 .invalid-value {
-  background-color: rgba(235, 16, 16, 0.4);
+  /* background-color: rgba(235, 16, 16, 0.4); */
+  background-color: rgba(255, 8, 8, 0.685);
 }
 
 .invalid-value::placeholder {
-  color: rgb(170, 170, 170);
+  /* color: rgb(170, 170, 170); */
+  color: rgb(49, 49, 49);
 }

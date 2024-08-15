@@ -3,6 +3,7 @@ import { createElementAndAddClasses } from "./utils.js";
 export const createTask = (task) => {
   const li = createElementAndAddClasses("li", ["list__item", "list-item"]);
   li.setAttribute("data-id", task.id);
+  li.draggable = "true";
 
   const label = createElementAndAddClasses("label", ["custom-checkbox"]);
 
