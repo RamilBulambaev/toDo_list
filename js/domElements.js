@@ -9,3 +9,7 @@ export const TASK_COMPLETED_COUNT = document.querySelector(
 );
 export const FILTER_TASK = document.querySelector(".filter");
 export const SORT__DIV = document.querySelector(".tasks__summary");
+export const CHECKBOX_SWITCHER_THEME = document.querySelector(
+  "#darkmode-toggle__input"
+);
+export const BODY_ELEMENT = document.querySelector("body");

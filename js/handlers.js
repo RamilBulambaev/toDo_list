@@ -6,8 +6,15 @@ import {
   invalidFieldWarningInput,
   enableTaskEditing,
 } from "./taskOperations.js";
-import { ADD_FORM, LIST, SORT__DIV, FILTER_TASK } from "./domElements.js";
+import {
+  ADD_FORM,
+  LIST,
+  SORT__DIV,
+  FILTER_TASK,
+  CHECKBOX_SWITCHER_THEME,
+} from "./domElements.js";
 import { getTasksFromLocalStorage } from "./storageUtils.js";
+import { themeSwitcher } from "./themeSwitcher.js";
 
 export const handleFormSubmit = () => {
   ADD_FORM.addEventListener("submit", (e) => {
@@ -81,5 +88,11 @@ export const handleChangeFilter = () => {
       listTasks = getTasksFromLocalStorage();
       renderTasks(listTasks);
     }
+  });
+};
+
+export const handleThemeSwitcher = () => {
+  CHECKBOX_SWITCHER_THEME.addEventListener("change", (e) => {
+    themeSwitcher(e.target.checked);
   });
 };

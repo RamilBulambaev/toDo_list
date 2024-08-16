@@ -4,10 +4,12 @@ import {
   handleFormSubmit,
   handleChangeFilter,
   handleSort,
+  handleThemeSwitcher,
 } from "./handlers.js";
 import { getTasksFromLocalStorage } from "./storageUtils.js";
-import { LIST } from "./domElements.js";
+import { CHECKBOX_SWITCHER_THEME, LIST } from "./domElements.js";
 import { dragAndDrop } from "./dragAndDrop.js";
+import { themeSwitcher } from "./themeSwitcher.js";
 
 export const start = () => {
   LIST.innerHTML = "";
@@ -15,9 +17,18 @@ export const start = () => {
     renderTasks(getTasksFromLocalStorage());
   }
 
+  if (localStorage.getItem("styleMode") === "darkStyle") {
+    themeSwitcher(true);
+  }
+  if (localStorage.getItem("styleMode") === "lightStyle") {
+    CHECKBOX_SWITCHER_THEME.checked = false;
+    themeSwitcher(false);
+  }
+
   handleFormSubmit();
   handleClickTask();
   handleChangeFilter();
   handleSort();
+  handleThemeSwitcher();
   dragAndDrop();
 };
