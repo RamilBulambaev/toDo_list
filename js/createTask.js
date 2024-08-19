@@ -1,28 +1,46 @@
-import { createElementAndAddClasses } from "./utils.js";
+import { createDomElement } from "./utils.js";
 
 export const createTask = (task) => {
-  const li = createElementAndAddClasses("li", ["list__item", "list-item"]);
-  li.setAttribute("data-id", task.id);
-  li.draggable = "true";
+  const li = createDomElement("li", {
+    classes: ["list__item", "list-item"],
+    elementAttributes: {
+      "data-id": task.id,
+      draggable: true,
+    },
+  });
 
-  const label = createElementAndAddClasses("label", ["custom-checkbox"]);
+  const label = createDomElement("label", {
+    classes: ["custom-checkbox"],
+  });
 
-  const checkbox = createElementAndAddClasses("input", ["checkbox"]);
-  checkbox.type = "checkbox";
+  const checkbox = createDomElement("input", {
+    classes: ["checkbox"],
+    elementAttributes: {
+      type: "checkbox",
+    },
+  });
   checkbox.checked = task.completed;
 
-  const span = createElementAndAddClasses("span", ["custom-checkbox__box"]);
+  const span = createDomElement("span", {
+    classes: ["custom-checkbox__box"],
+  });
 
   label.append(checkbox, span);
 
-  const p = createElementAndAddClasses("p", ["list-item__description"]);
-  p.textContent = task.description.trim();
+  const p = createDomElement("p", {
+    classes: ["list-item__description"],
+    elementText: task.description.trim(),
+  });
   if (task.completed) {
     p.classList.add("task-complete");
   }
 
-  const imgDelete = createElementAndAddClasses("img", ["delete"]);
-  imgDelete.src = "../assets/delete.svg";
+  const imgDelete = createDomElement("img", {
+    classes: ["delete"],
+    elementAttributes: {
+      src: "../assets/delete.svg",
+    },
+  });
 
   li.append(label, p, imgDelete);
 

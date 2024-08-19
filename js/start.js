@@ -7,7 +7,13 @@ import {
   handleThemeSwitcher,
 } from "./handlers.js";
 import { getTasksFromLocalStorage } from "./storageUtils.js";
-import { CHECKBOX_SWITCHER_THEME, LIST } from "./domElements.js";
+import {
+  CHECKBOX_SWITCHER_THEME,
+  LIST,
+  ADD_FORM,
+  SORT_DIV,
+  FILTER_TASK,
+} from "./domElements.js";
 import { dragAndDrop } from "./dragAndDrop.js";
 import { themeSwitcher } from "./themeSwitcher.js";
 
@@ -25,10 +31,10 @@ export const start = () => {
     themeSwitcher(false);
   }
 
-  handleFormSubmit();
-  handleClickTask();
-  handleChangeFilter();
-  handleSort();
-  handleThemeSwitcher();
+  handleFormSubmit(ADD_FORM);
+  handleClickTask(LIST);
+  handleChangeFilter(FILTER_TASK);
+  handleSort(SORT_DIV, FILTER_TASK);
+  handleThemeSwitcher(CHECKBOX_SWITCHER_THEME);
   dragAndDrop();
 };

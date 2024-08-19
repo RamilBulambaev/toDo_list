@@ -199,7 +199,7 @@
 }
 
 .list__container {
-  height: 60vh;
+  height: 55vh;
   overflow-x: hidden;
 }
 
@@ -313,4 +313,9 @@
 
 .invalid-value::placeholder {
   color: var(--color-text-additional);
+}
+
+.delete:hover {
+  width: 25px;
+  height: 25px;
 }

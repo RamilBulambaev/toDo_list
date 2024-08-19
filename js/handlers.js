@@ -5,94 +5,83 @@ import {
   toggleCompletedTask,
   invalidFieldWarningInput,
   enableTaskEditing,
+  sortTasks,
+  filterTasks,
 } from "./taskOperations.js";
-import {
-  ADD_FORM,
-  LIST,
-  SORT__DIV,
-  FILTER_TASK,
-  CHECKBOX_SWITCHER_THEME,
-} from "./domElements.js";
 import { getTasksFromLocalStorage } from "./storageUtils.js";
 import { themeSwitcher } from "./themeSwitcher.js";
 
-export const handleFormSubmit = () => {
-  ADD_FORM.addEventListener("submit", (e) => {
+export const handleFormSubmit = (elment) => {
+  elment.addEventListener("submit", (e) => {
     e.preventDefault();
+    const input = e.target[0];
+    const taskDescription = input.value.trim();
 
-    if (e.target[0].value) {
-      addTasks(e.target[0].value);
-      e.target[0].value = "";
+    if (taskDescription.length >= 3) {
+      try {
+        addTasks(taskDescription);
+        input.value = "";
+      } catch (error) {
+        console.error("Error adding task:", error);
+        alert("Произошла ошибка при добавлении задачи. Попробуйте снова.");
+      }
     } else {
       invalidFieldWarningInput(e.target[0]);
     }
   });
-  ADD_FORM.addEventListener("focusin", (e) => {
+  elment.addEventListener("focusin", (e) => {
     const input = e.target;
     input.classList.remove("invalid-value");
     input.placeholder = "Создать новую задачу";
   });
 };
 
-export const handleClickTask = () => {
-  LIST.addEventListener("click", (e) => {
-    if (e.target.classList.contains("delete")) {
-      deleteTask(e.target.parentElement.dataset.id);
+export const handleClickTask = (elment) => {
+  elment.addEventListener("click", (e) => {
+    try {
+      if (e.target.classList.contains("delete")) {
+        deleteTask(e.target.parentElement.dataset.id);
+      }
+      if (e.target.classList.contains("checkbox")) {
+        toggleCompletedTask(e.target.closest("li").dataset.id);
+      }
+      if (
+        e.target.classList.contains("list-item__description") &&
+        !e.target.classList.contains("task-complete")
+      ) {
+        enableTaskEditing(e.target);
+      }
+    } catch (error) {
+      console.error("Error handling task click:", error);
+      alert("Произошла ошибка при обработке задачи. Попробуйте снова.");
     }
-    if (e.target.classList.contains("checkbox")) {
-      toggleCompletedTask(e.target.closest("li").dataset.id);
-    }
+  });
+};
+
+export const handleSort = (elmentSort, elementFilter) => {
+  elmentSort.addEventListener("click", (e) => {
+    let listTasks = getTasksFromLocalStorage();
     if (
-      e.target.classList.contains("list-item__description") &&
-      !e.target.classList.contains("task-complete")
+      e.target.classList.contains("tasks-panding") ||
+      e.target.classList.contains("tasks-completed")
     ) {
-      enableTaskEditing(e.target);
+      listTasks = sortTasks(listTasks, e.target.classList[1]);
+      elementFilter.value = "title";
+      renderTasks(listTasks);
     }
   });
 };
 
-export const handleSort = () => {
-  SORT__DIV.addEventListener("click", (e) => {
+export const handleChangeFilter = (elementFilter) => {
+  elementFilter.addEventListener("change", (e) => {
     let listTasks = getTasksFromLocalStorage();
-    if (e.target.classList.contains("tasks-panding")) {
-      listTasks.sort((a, b) => {
-        if (a.completed === false && b.completed === true) return -1;
-        if (a.completed === true && b.completed === false) return 1;
-        return 0;
-      });
-      FILTER_TASK.value = "title";
-      renderTasks(listTasks);
-    } else if (e.target.classList.contains("tasks-completed")) {
-      listTasks.sort((a, b) => {
-        if (a.completed === false && b.completed === true) return 1;
-        if (a.completed === true && b.completed === false) return -1;
-        return 0;
-      });
-      FILTER_TASK.value = "title";
-      renderTasks(listTasks);
-    }
+    listTasks = filterTasks(listTasks, e.target.value);
+    renderTasks(listTasks);
   });
 };
 
-export const handleChangeFilter = () => {
-  FILTER_TASK.addEventListener("change", (e) => {
-    let listTasks = getTasksFromLocalStorage();
-    const valueFilter = e.target.value;
-    if (valueFilter === "panding") {
-      listTasks = listTasks.filter((item) => item.completed === false);
-      renderTasks(listTasks);
-    } else if (valueFilter === "completed") {
-      listTasks = listTasks.filter((item) => item.completed === true);
-      renderTasks(listTasks);
-    } else {
-      listTasks = getTasksFromLocalStorage();
-      renderTasks(listTasks);
-    }
-  });
-};
-
-export const handleThemeSwitcher = () => {
-  CHECKBOX_SWITCHER_THEME.addEventListener("change", (e) => {
+export const handleThemeSwitcher = (elementSwither) => {
+  elementSwither.addEventListener("change", (e) => {
     themeSwitcher(e.target.checked);
   });
 };
